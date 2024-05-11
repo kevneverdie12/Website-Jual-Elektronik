@@ -16,9 +16,9 @@ include "template/header.php";
                     <thead>
                         <tr>
                             <th>ID Transaksi</th>
-                            <th>Nama Pelanggan</th>
-                            <th>Nama Produk</th>
-                            <th>Kuantitas</th>
+                            <th>Nama Pembeli</th>
+                            <th>Nama Obat</th>
+                            <th>jumlah_obat</th>
                             <th>Total Harga</th>
                             <th>Tanggal Transaksi</th>
                             <th>Aksi</th>
@@ -30,16 +30,16 @@ include "template/header.php";
                         include "koneksi.php";
 
                         // Query untuk mengambil data dari view transaksi_penjualan
-                        $sql = $pdo->prepare("SELECT * FROM view_transaksi_penjualan");
+                        $sql = $pdo->prepare("SELECT * FROM vwpenjualan");
                         $sql->execute();
 
                         // Loop untuk menampilkan data
                         while ($data = $sql->fetch()) {
                             echo "<tr>";
                             echo "<td>" . $data['id_transaksi'] . "</td>";
-                            echo "<td>" . $data['nama_pelanggan'] . "</td>";
-                            echo "<td>" . $data['nama_produk'] . "</td>";
-                            echo "<td>" . $data['kuantitas'] . "</td>";
+                            echo "<td>" . $data['nama_pembeli'] . "</td>";
+                            echo "<td>" . $data['nama_obat'] . "</td>";
+                            echo "<td>" . $data['jumlah_obat'] . "</td>";
                             echo "<td>" . $data['total_harga'] . "</td>";
                             echo "<td>" . $data['tanggal_transaksi'] . "</td>";
                             echo "<td>

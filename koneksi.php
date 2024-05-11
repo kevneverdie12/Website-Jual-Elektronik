@@ -2,7 +2,7 @@
 $host = "localhost";
 $username = "root"; 
 $password = ""; 
-$database = "db_jual_beli_obat";
+$database = "db_responsi";
 $pdo = new PDO('mysql:host='.$host.';dbname='.$database, $username, $password); 
 
 ?>

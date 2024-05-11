@@ -14,9 +14,9 @@ include "template/header.php";
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <tr>
                         <th>ID Produk</th>
-                        <th>Nama Produk</th>
-                        <th>Harga</th>
-                        <th>Stock</th>
+                        <th>Nama Obat</th>
+                        <th>Harga Obat</th>
+                        <th>Stok Obat</th>
                         <th>Aksi</th>
                     </tr>
                     <?php
@@ -24,16 +24,16 @@ include "template/header.php";
                     include "koneksi.php";
 
                     // Query untuk mengambil data dari view_produk
-                    $sql = $pdo->prepare("SELECT * FROM view_produk");
+                    $sql = $pdo->prepare("SELECT * FROM vwproduk");
                     $sql->execute();
 
                     // Loop untuk menampilkan data
                     while ($data = $sql->fetch()) {
                         echo "<tr>";
                         echo "<td>" . $data['id_produk'] . "</td>";
-                        echo "<td>" . $data['nama_produk'] . "</td>";
-                        echo "<td>" . $data['harga'] . "</td>";
-                        echo "<td>" . $data['stock'] . "</td>";
+                        echo "<td>" . $data['nama_obat'] . "</td>";
+                        echo "<td>" . $data['harga_obat'] . "</td>";
+                        echo "<td>" . $data['stock_obat'] . "</td>";
                         echo "<td>
                                 <a href='ubah_produk.php?id_produk=" . $data['id_produk'] . "' onclick=\"return confirm('Apakah Anda yakin ingin mengedit data ini?')\" class='btn btn-primary btn-icon-split'>
                                     <span class='icon text-white-50'>

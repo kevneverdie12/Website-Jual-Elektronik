@@ -11,7 +11,7 @@ if (!isset($_GET['id_transaksi'])) {
 $id_transaksi = $_GET['id_transaksi'];
 
 // Query untuk menghapus transaksi berdasarkan id_transaksi
-$sql_delete = $pdo->prepare("DELETE FROM transaksipenjualan WHERE id_transaksi = :id_transaksi");
+$sql_delete = $pdo->prepare("DELETE FROM penjualan WHERE id_transaksi = :id_transaksi");
 $sql_delete->bindParam(':id_transaksi', $id_transaksi);
 
 

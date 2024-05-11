@@ -1,13 +1,13 @@
 <?php
 include "koneksi.php";
 
-if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['id_pelanggan'])) {
+if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['id_pembeli'])) {
     // Ambil ID pelanggan dari parameter URL
-    $id_pelanggan = $_GET['id_pelanggan'];
+    $id_pembeli = $_GET['id_pembeli'];
 
     // Query untuk menghapus data pelanggan berdasarkan ID
-    $stmt = $pdo->prepare("DELETE FROM pelanggan WHERE id_pelanggan = :id_pelanggan");
-    $stmt->bindParam(':id_pelanggan', $id_pelanggan, PDO::PARAM_INT);
+    $stmt = $pdo->prepare("DELETE FROM tb_pembeli WHERE id_pembeli = :id_pembeli");
+    $stmt->bindParam(':id_pembeli', $id_pembeli, PDO::PARAM_INT);
     $stmt->execute();
 
     // Redirect kembali ke halaman view_pelanggan.php setelah penghapusan selesai

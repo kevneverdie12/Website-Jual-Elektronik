@@ -4,36 +4,36 @@ include "template/header.php";
 // Include file koneksi.php
 include "koneksi.php";
 
-// Query untuk mendapatkan data pelanggan
-$sql_pelanggan = $pdo->prepare("SELECT id_pelanggan, nama_pelanggan FROM pelanggan");
-$sql_pelanggan->execute();
-$data_pelanggan = $sql_pelanggan->fetchAll();
+// Query untuk mendapatkan data pembeli
+$sql_tb_pembeli = $pdo->prepare("SELECT id_pembeli, nama_pembeli FROM tb_pembeli");
+$sql_tb_pembeli->execute();
+$data_tb_pembeli = $sql_tb_pembeli->fetchAll();
 
-// Query untuk mendapatkan data produk
-$sql_produk = $pdo->prepare("SELECT id_produk, nama_produk FROM produk");
+// Query untuk mendapatkan data obat
+$sql_produk = $pdo->prepare("SELECT id_produk, nama_obat FROM tb_produk");
 $sql_produk->execute();
 $data_produk = $sql_produk->fetchAll();
 
 // Cek apakah form telah dikirimkan untuk disimpan
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Ambil data yang dikirimkan melalui form
-    $id_pelanggan = $_POST['id_pelanggan'];
+    $id_pembeli = $_POST['id_pembeli'];
     $id_produk = $_POST['id_produk'];
-    $kuantitas = $_POST['kuantitas'];
+    $jumlah_obat = $_POST['jumlah_obat'];
     $tanggal_transaksi = date("Y-m-d H:i:s");
 
-    $sql_produk_detail = $pdo->prepare("SELECT harga FROM produk WHERE id_produk = :id_produk");
+    $sql_produk_detail = $pdo->prepare("SELECT harga_obat FROM tb_produk WHERE id_produk = :id_produk");
     $sql_produk_detail->bindParam(':id_produk', $id_produk);
     $sql_produk_detail->execute();
     $produk_detail = $sql_produk_detail->fetch();
-    $harga = $produk_detail['harga'];
-    $total_harga = $harga * $kuantitas;
+    $harga_obat = $produk_detail['harga_obat'];
+    $total_harga = $harga_obat * $jumlah_obat;
 
     // Query untuk menyimpan transaksi baru
-    $sql_insert = $pdo->prepare("INSERT INTO transaksipenjualan (id_pelanggan, id_produk, kuantitas, total_harga, tanggal_transaksi) VALUES (:id_pelanggan, :id_produk, :kuantitas, :total_harga, :tanggal_transaksi)");
-    $sql_insert->bindParam(':id_pelanggan', $id_pelanggan);
+    $sql_insert = $pdo->prepare("INSERT INTO penjualan (id_pembeli, id_produk, jumlah_obat, total_harga, tanggal_transaksi) VALUES (:id_pembeli, :id_produk, :jumlah_obat, :total_harga, :tanggal_transaksi)");
+    $sql_insert->bindParam(':id_pembeli', $id_pembeli);
     $sql_insert->bindParam(':id_produk', $id_produk);
-    $sql_insert->bindParam(':kuantitas', $kuantitas);
+    $sql_insert->bindParam(':jumlah_obat', $jumlah_obat);
     $sql_insert->bindParam(':total_harga', $total_harga);
     $sql_insert->bindParam(':tanggal_transaksi', $tanggal_transaksi);
 
@@ -64,10 +64,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="card-body">
                     <form action="" method="POST">
                         <div class="form-group">
-                            <label>Nama Pelanggan</label>
-                            <select class="form-control" name="id_pelanggan">
-                                <?php foreach ($data_pelanggan as $pelanggan): ?>
-                                    <option value="<?php echo $pelanggan['id_pelanggan']; ?>"><?php echo $pelanggan['nama_pelanggan']; ?></option>
+                            <label>Nama tb_pembeli</label>
+                            <select class="form-control" name="id_pembeli">
+                                <?php foreach ($data_tb_pembeli as $tb_pembeli): ?>
+                                    <option value="<?php echo $tb_pembeli['id_pembeli']; ?>"><?php echo $tb_pembeli['nama_pembeli']; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -76,14 +76,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <label>Nama Produk</label>
                             <select class="form-control" name="id_produk">
                                 <?php foreach ($data_produk as $produk): ?>
-                                    <option value="<?php echo $produk['id_produk']; ?>"><?php echo $produk['nama_produk']; ?></option>
+                                    <option value="<?php echo $produk['id_produk']; ?>"><?php echo $produk['nama_obat']; ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label>Kuantitas</label>
-                            <input type="text" class="form-control" name="kuantitas">
+                            <input type="text" class="form-control" name="jumlah_obat">
                         </div>
 
                         <button type="submit" class="btn btn-primary">Simpan</button>

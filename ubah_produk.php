@@ -9,37 +9,37 @@ $pesan = '';
 // Cek apakah form telah disubmit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Tangkap data yang dikirim melalui form
-    $id_produk = $_GET['id_produk'];
-    $nama_produk = $_POST['nama_produk'];
-    $harga = $_POST['harga'];
-    $stock = $_POST['stock'];
+    $id_obat = $_GET['id_obat'];
+    $nama_obat = $_POST['nama_obat'];
+    $harga_obat = $_POST['harga_obat'];
+    $stok = $_POST['stok'];
 
-    // Panggil stored procedure untuk mengubah data produk
-    $stmt = $pdo->prepare("CALL update_produk(:id_produk, :nama_produk, :harga, :stock)");
-    $stmt->bindParam(':id_produk', $id_produk, PDO::PARAM_INT);
-    $stmt->bindParam(':nama_produk', $nama_produk, PDO::PARAM_STR);
-    $stmt->bindParam(':harga', $harga, PDO::PARAM_STR);
-    $stmt->bindParam(':stock', $stock, PDO::PARAM_INT);
+    // Panggil stored procedure untuk mengubah data obat
+    $stmt = $pdo->prepare("CALL update_obat(:id_obat, :nama_obat, :harga_obat, :stok)");
+    $stmt->bindParam(':id_obat', $id_obat, PDO::PARAM_INT);
+    $stmt->bindParam(':nama_obat', $nama_obat, PDO::PARAM_STR);
+    $stmt->bindParam(':harga_obat', $harga_obat, PDO::PARAM_STR);
+    $stmt->bindParam(':stok', $stok, PDO::PARAM_INT);
     $stmt->execute();
 
     // Periksa apakah proses perubahan berhasil atau tidak
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
     if ($result = true) {
-        $pesan = "Data produk berhasil diubah.";
+        $pesan = "Data obat berhasil diubah.";
     } else {
-        $pesan = "Gagal mengubah data produk.";
+        $pesan = "Gagal mengubah data obat.";
     }
 }
 
-// Ambil data produk berdasarkan ID yang dikirim melalui URL
-$id_produk = $_GET['id_produk'];
-$sql_produk = $pdo->prepare("SELECT * FROM produk WHERE id_produk = :id_produk");
-$sql_produk->bindParam(':id_produk', $id_produk, PDO::PARAM_INT);
-$sql_produk->execute();
-$data_produk = $sql_produk->fetch(PDO::FETCH_ASSOC);
+// Ambil data obat berdasarkan ID yang dikirim melalui URL
+$id_obat = $_GET['id_obat'];
+$sql_obat = $pdo->prepare("SELECT * FROM tb_produk WHERE id_obat = :id_obat");
+$sql_obat->bindParam(':id_obat', $id_obat, PDO::PARAM_INT);
+$sql_obat->execute();
+$data_obat = $sql_obat->fetch(PDO::FETCH_ASSOC);
 ?>
 
-<h1>Update Data Produk</h1>
+<h1>Update Data obat</h1>
 
 <?php
 // Tampilkan pesan hasil proses 
@@ -48,19 +48,19 @@ if ($pesan != '') {
 }
 ?>
 
-<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . "?id_produk=" . $id_produk; ?>">
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . "?id_obat=" . $id_obat; ?>">
     <table cellpadding="8">
         <tr>
-            <td>Nama Produk</td>
-            <td><input type="text" name="nama_produk" value="<?php echo $data_produk['nama_produk']; ?>"></td>
+            <td>Nama obat</td>
+            <td><input type="text" name="nama_obat" value="<?php echo $data_obat['nama_obat']; ?>"></td>
         </tr>
         <tr>
-            <td>Harga</td>
-            <td><input type="text" name="harga" value="<?php echo $data_produk['harga']; ?>"></td>
+            <td>harga_obat</td>
+            <td><input type="text" name="harga_obat" value="<?php echo $data_obat['harga_obat']; ?>"></td>
         </tr>
         <tr>
-            <td>Stock</td>
-            <td><input type="text" name="stock" value="<?php echo $data_produk['stock']; ?>"></td>
+            <td>stok</td>
+            <td><input type="text" name="stok" value="<?php echo $data_obat['stok']; ?>"></td>
         </tr>
     </table>
     <hr>

@@ -5,27 +5,27 @@ include "koneksi.php";
 $pesan = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id_pelanggan = $_GET['id_pelanggan'];
-    $nama_pelanggan = $_POST['nama_pelanggan'];
+    $id_pembeli = $_GET['id_pembeli'];
+    $nama_pembeli = $_POST['nama_pembeli'];
     $alamat = $_POST['alamat'];
 
-    $stmt = $pdo->prepare("UPDATE pelanggan SET nama_pelanggan = :nama_pelanggan, alamat = :alamat WHERE id_pelanggan = :id_pelanggan");
-    $stmt->bindParam(':id_pelanggan', $id_pelanggan, PDO::PARAM_INT);
-    $stmt->bindParam(':nama_pelanggan', $nama_pelanggan, PDO::PARAM_STR);
+    $stmt = $pdo->prepare("UPDATE tb_pembeli SET nama_pembeli = :nama_pembeli, alamat = :alamat WHERE id_pembeli = :id_pembeli");
+    $stmt->bindParam(':id_pembeli', $id_pembeli, PDO::PARAM_INT);
+    $stmt->bindParam(':nama_pembeli', $nama_pembeli, PDO::PARAM_STR);
     $stmt->bindParam(':alamat', $alamat, PDO::PARAM_STR);
     $stmt->execute();
 
-    $pesan = "Data pelanggan berhasil diubah.";
+    $pesan = "Data pembeli berhasil diubah.";
 }
 
-$id_pelanggan = $_GET['id_pelanggan'];
-$sql_pelanggan = $pdo->prepare("SELECT * FROM pelanggan WHERE id_pelanggan = :id_pelanggan");
-$sql_pelanggan->bindParam(':id_pelanggan', $id_pelanggan, PDO::PARAM_INT);
-$sql_pelanggan->execute();
-$data_pelanggan = $sql_pelanggan->fetch(PDO::FETCH_ASSOC);
+$id_pembeli = $_GET['id_pembeli'];
+$sql_pembeli = $pdo->prepare("SELECT * FROM tb_pembeli WHERE id_pembeli = :id_pembeli");
+$sql_pembeli->bindParam(':id_pembeli', $id_pembeli, PDO::PARAM_INT);
+$sql_pembeli->execute();
+$data_pembeli = $sql_pembeli->fetch(PDO::FETCH_ASSOC);
 ?>
 
-<h1>Update Data Pelanggan</h1>
+<h1>Update Data pembeli</h1>
 
 <?php
 if ($pesan != '') {
@@ -33,15 +33,15 @@ if ($pesan != '') {
 }
 ?>
 
-<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . "?id_pelanggan=" . $id_pelanggan; ?>">
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . "?id_pembeli=" . $id_pembeli; ?>">
     <table cellpadding="8">
         <tr>
-            <td>Nama Pelanggan</td>
-            <td><input type="text" name="nama_pelanggan" value="<?php echo $data_pelanggan['nama_pelanggan']; ?>"></td>
+            <td>Nama pembeli</td>
+            <td><input type="text" name="nama_pembeli" value="<?php echo $data_pembeli['nama_pembeli']; ?>"></td>
         </tr>
         <tr>
             <td>Alamat</td>
-            <td><input type="text" name="alamat" value="<?php echo $data_pelanggan['alamat']; ?>"></td>
+            <td><input type="text" name="alamat" value="<?php echo $data_pembeli['alamat']; ?>"></td>
         </tr>
     </table>
     <hr>

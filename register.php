@@ -43,7 +43,7 @@
                                     <input type="password" class="form-control form-control-user" name="password" placeholder="Password">
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" name="nama_lengkap" placeholder="Full Name">
+                                    <input type="text" class="form-control form-control-user" name="nama_admin" placeholder="Full Name">
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-user btn-block">
                                     Register Account

@@ -16,15 +16,15 @@ include "koneksi.php";
 // Cek apakah form telah dikirimkan untuk disimpan
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Ambil data yang dikirimkan melalui form
-    $id_pelanggan = $_POST['id_pelanggan'];
+    $id_pembeli = $_POST['id_pembeli'];
     $id_produk = $_POST['id_produk'];
-    $kuantitas = $_POST['kuantitas'];
+    $jumlah_obat = $_POST['jumlah_obat'];
 
     // Query untuk melakukan update transaksi
-    $sql_update = $pdo->prepare("UPDATE transaksipenjualan SET id_pelanggan = :id_pelanggan, id_produk = :id_produk, kuantitas = :kuantitas WHERE id_transaksi = :id_transaksi");
-    $sql_update->bindParam(':id_pelanggan', $id_pelanggan);
+    $sql_update = $pdo->prepare("UPDATE transaksipenjualan SET id_pembeli = :id_pembeli, id_produk = :id_produk, jumlah_obat = :jumlah_obat WHERE id_transaksi = :id_transaksi");
+    $sql_update->bindParam(':id_pembeli', $id_pembeli);
     $sql_update->bindParam(':id_produk', $id_produk);
-    $sql_update->bindParam(':kuantitas', $kuantitas);
+    $sql_update->bindParam(':jumlah_obat', $jumlah_obat);
     $sql_update->bindParam(':id_transaksi', $id_transaksi);
 
     // Eksekusi query update
@@ -38,13 +38,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Query untuk mendapatkan data transaksi berdasarkan id_transaksi
-$sql_transaksi = $pdo->prepare("SELECT * FROM transaksipenjualan WHERE id_transaksi = :id_transaksi");
+$sql_transaksi = $pdo->prepare("SELECT * FROM penjualan WHERE id_transaksi = :id_transaksi");
 $sql_transaksi->bindParam(':id_transaksi', $id_transaksi);
 $sql_transaksi->execute();
 $data_transaksi = $sql_transaksi->fetch();
 
 // Query untuk mendapatkan data pelanggan
-$sql_pelanggan = $pdo->prepare("SELECT id_pelanggan, nama_pelanggan FROM pelanggan");
+$sql_pelanggan = $pdo->prepare("SELECT id_pembeli, nama_pembeli FROM tb_pembeli");
 $sql_pelanggan->execute();
 $data_pelanggan = $sql_pelanggan->fetchAll();
 ?>
@@ -59,29 +59,29 @@ $data_pelanggan = $sql_pelanggan->fetchAll();
 
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Form Edit Transaksi</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Form Edit Penjualan</h6>
                 </div>
                 <div class="card-body">
                     <form action="" method="POST">
                         <input type="hidden" name="id_transaksi" value="<?php echo $data_transaksi['id_transaksi']; ?>">
 
                         <div class="form-group">
-                            <label>Nama Pelanggan</label>
-                            <select class="form-control" name="id_pelanggan">
+                            <label>Nama Pembeli</label>
+                            <select class="form-control" name="id_pembeli">
                                 <?php foreach ($data_pelanggan as $pelanggan) : ?>
-                                    <option value="<?php echo $pelanggan['id_pelanggan']; ?>" <?php if ($pelanggan['id_pelanggan'] == $data_transaksi['id_pelanggan']) echo 'selected'; ?>>
-                                        <?php echo $pelanggan['nama_pelanggan']; ?>
+                                    <option value="<?php echo $pelanggan['id_pembeli']; ?>" <?php if ($pelanggan['id_pembeli'] == $data_transaksi['id_pembeli']) echo 'selected'; ?>>
+                                        <?php echo $pelanggan['nama_pembeli']; ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label>Nama Produk</label>
+                            <label>Nama Obat</label>
                             <select class="form-control" name="id_produk">
                                 <?php
                                 // Query untuk mendapatkan data produk
-                                $sql_produk = $pdo->prepare("SELECT id_produk, nama_produk FROM produk");
+                                $sql_produk = $pdo->prepare("SELECT id_produk, nama_obat FROM tb_produk");
                                 $sql_produk->execute();
                                 $data_produk = $sql_produk->fetchAll();
 
@@ -89,7 +89,7 @@ $data_pelanggan = $sql_pelanggan->fetchAll();
                                 foreach ($data_produk as $produk) :
                                 ?>
                                     <option value="<?php echo $produk['id_produk']; ?>" <?php if ($produk['id_produk'] == $data_transaksi['id_produk']) echo 'selected'; ?>>
-                                        <?php echo $produk['nama_produk']; ?>
+                                        <?php echo $produk['nama_obat']; ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
@@ -97,8 +97,8 @@ $data_pelanggan = $sql_pelanggan->fetchAll();
 
 
                         <div class="form-group">
-                            <label>Kuantitas</label>
-                            <input type="text" class="form-control" name="kuantitas" value="<?php echo $data_transaksi['kuantitas']; ?>">
+                            <label>jumlah_obat</label>
+                            <input type="text" class="form-control" name="jumlah_obat" value="<?php echo $data_transaksi['jumlah_obat']; ?>">
                         </div>
 
                         <button type="submit" class="btn btn-primary">Simpan Perubahan</button>

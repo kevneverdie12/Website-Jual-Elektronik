@@ -9,15 +9,15 @@ $pesan = '';
 // Cek apakah form telah disubmit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Tangkap data yang dikirim melalui form
-    $nama_produk = $_POST['nama_produk'];
-    $harga = $_POST['harga'];
-    $stock = $_POST['stock'];
+    $nama_obat = $_POST['nama_obat'];
+    $harga_obat = $_POST['harga_obat'];
+    $stok_obat = $_POST['stok_obat'];
 
     // Panggil stored procedure untuk menambahkan produk
-    $stmt = $pdo->prepare("CALL tambah_produk(:nama_produk, :harga, :stock)");
-    $stmt->bindParam(':nama_produk', $nama_produk, PDO::PARAM_STR);
-    $stmt->bindParam(':harga', $harga, PDO::PARAM_STR);
-    $stmt->bindParam(':stock', $stock, PDO::PARAM_INT);
+    $stmt = $pdo->prepare("CALL tambah_produk(:nama_obat, :harga_obat, :stok_obat)");
+    $stmt->bindParam(':nama_obat', $nama_obat, PDO::PARAM_STR);
+    $stmt->bindParam(':harga_obat', $harga_obat, PDO::PARAM_STR);
+    $stmt->bindParam(':stok_obat', $stok_obat, PDO::PARAM_INT);
     $stmt->execute();
 
     // Periksa apakah proses penambahan berhasil atau tidak
@@ -43,15 +43,15 @@ if ($pesan != '') {
     <table class="table table-bordered" id="dataTable" width="75%" cellspacing="0">
         <tr>
             <td>Nama Produk</td>
-            <td><input type="text" name="nama_produk"></td>
+            <td><input type="text" name="nama_obat"></td>
         </tr>
         <tr>
-            <th>Harga</th>
-            <td><input type="text" name="harga"></td>
+            <th>Harga_obat</th>
+            <td><input type="text" name="harga_obat"></td>
         </tr>
         <tr>
-            <td>Stock</td>
-            <td><input type="text" name="stock"></td>
+            <td>stok_obat</td>
+            <td><input type="text" name="stok_obat"></td>
         </tr>
     </table>
     <hr>

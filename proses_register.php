@@ -5,7 +5,7 @@ include "koneksi.php";
 // Tangkap data yang dikirimkan dari form
 $username = $_POST['username'];
 $password = $_POST['password'];
-$nama_lengkap = $_POST['nama_lengkap'];
+$nama_admin = $_POST['nama_admin'];
 
 // Query untuk mengecek apakah username sudah ada dalam database
 $sql_check = "SELECT * FROM admin WHERE username='$username'";
@@ -19,11 +19,11 @@ if ($result_check->rowCount() > 0) {
 } else {
 
     // Query untuk menyimpan data pengguna ke database
-    $sql_register = "INSERT INTO admin (username, password, nama_lengkap) VALUES (:username, :password, :nama_lengkap)";
+    $sql_register = "INSERT INTO admin (username, password, nama_admin) VALUES (:username, :password, :nama_admin)";
     $stmt = $pdo->prepare($sql_register);
     $stmt->bindParam(':username', $username);
     $stmt->bindParam(':password', $password);
-    $stmt->bindParam(':nama_lengkap', $nama_lengkap);
+    $stmt->bindParam(':nama_admin', $nama_admin);
 
     // Eksekusi query
     if ($stmt->execute()) {

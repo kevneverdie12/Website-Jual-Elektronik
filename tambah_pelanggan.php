@@ -5,22 +5,22 @@ include "koneksi.php";
 $pesan = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Ambil data pelanggan yang dikirim melalui form
-    $nama_pelanggan = $_POST['nama_pelanggan'];
+    // Ambil data pembeli yang dikirim melalui form
+    $nama_pembeli = $_POST['nama_pembeli'];
     $alamat = $_POST['alamat'];
 
-    // Query untuk menambahkan data pelanggan ke dalam tabel
-    $stmt = $pdo->prepare("INSERT INTO pelanggan (nama_pelanggan, alamat) VALUES (:nama_pelanggan, :alamat)");
-    $stmt->bindParam(':nama_pelanggan', $nama_pelanggan, PDO::PARAM_STR);
+    // Query untuk menambahkan data pembeli ke dalam tabel
+    $stmt = $pdo->prepare("INSERT INTO tb_pembeli (nama_pembeli, alamat) VALUES (:nama_pembeli, :alamat)");
+    $stmt->bindParam(':nama_pembeli', $nama_pembeli, PDO::PARAM_STR);
     $stmt->bindParam(':alamat', $alamat, PDO::PARAM_STR);
     $stmt->execute();
 
     // Set pesan sukses jika penambahan berhasil
-    $pesan = "Data pelanggan berhasil ditambahkan.";
+    $pesan = "Data pembeli berhasil ditambahkan.";
 }
 ?>
 
-<h1>Tambah Data Pelanggan</h1>
+<h1>Tambah Data pembeli</h1>
 
 <?php
 if ($pesan != '') {
@@ -31,8 +31,8 @@ if ($pesan != '') {
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
     <table cellpadding="8">
         <tr>
-            <td>Nama Pelanggan</td>
-            <td><input type="text" name="nama_pelanggan"></td>
+            <td>Nama Pembeli</td>
+            <td><input type="text" name="nama_pembeli"></td>
         </tr>
         <tr>
             <td>Alamat</td>
